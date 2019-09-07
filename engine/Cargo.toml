@@ -1,0 +1,16 @@
+[package]
+name = "engine"
+version = "0.1.0"
+authors = ["runbmp"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+specs = "*"
+dynamic_reload = "*"
+components = { path = "../components" }
+charr = { path = "../systems/charr" }
+plugins = { path = "../plugins" }
+
+

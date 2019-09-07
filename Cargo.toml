@@ -1,0 +1,11 @@
+[workspace]
+members = [
+  "engine",
+  "components",
+  "framelimiter",
+  "time",
+  "plugins",
+  "systems/charr",
+  "scripts/charr_dylib"
+]
+
