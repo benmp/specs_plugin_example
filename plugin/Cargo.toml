@@ -1,5 +1,5 @@
 [package]
-name = "plugins"
+name = "plugin"
 version = "0.1.0"
 authors = ["runbmp"]
 edition = "2018"

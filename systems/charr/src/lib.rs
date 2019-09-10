@@ -1,12 +1,9 @@
-use dynamic_reload::{DynamicReload, Lib, PlatformName, Search, Symbol, UpdateState};
+use dynamic_reload::{DynamicReload, PlatformName, Search, Symbol};
 use specs::prelude::*;
-extern crate components;
-extern crate plugins;
 
-// DynamicReload::new(Some(vec!["target/debug"]), Some("/tmp"), Search::Default);
 pub struct RenderChar {
     pub reload_handler: DynamicReload,
-    pub plugins: plugins::Plugins,
+    pub plugin: plugin::Plugin,
 }
 
 impl RenderChar {
@@ -17,10 +14,14 @@ impl RenderChar {
                 Some("/tmp"),
                 Search::Default,
             ),
-            plugins: plugins::Plugins {
-                plugins: Vec::new(),
-            },
+            plugin: plugin::Plugin { plugin: None },
         }
+    }
+}
+
+impl Default for RenderChar {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -30,18 +31,25 @@ impl<'a> System<'a> for RenderChar {
     // see the `full` example.
     type SystemData = ReadStorage<'a, components::Character>;
 
-    fn run(&mut self, mut storage: Self::SystemData) {
-        for mychar in (&mut storage).join() {
+    fn run(&mut self, storage: Self::SystemData) {
+        for mychar in (storage).join() {
             //mychar.0 = 'a';
             println!("{}", mychar.0);
         }
 
         self.reload_handler
-            .update(plugins::Plugins::reload_callback, &mut self.plugins);
+            .update(plugin::Plugin::reload_callback, &mut self.plugin);
 
         //TODO figure out how to cache this symbol?
-        let fun: Symbol<fn() -> i32> =
-            unsafe { self.plugins.plugins[0].lib.get(b"it_works").unwrap() };
+        let fun: Symbol<fn() -> i32> = unsafe {
+            self.plugin
+                .plugin
+                .as_ref()
+                .unwrap()
+                .lib
+                .get(b"it_works")
+                .unwrap()
+        };
         println!("{}", fun());
     }
 
@@ -52,10 +60,9 @@ impl<'a> System<'a> for RenderChar {
             .reload_handler
             .add_library("libcharr_dylib.so", PlatformName::No)
         {
-            Ok(lib) => self.plugins.add_plugin(&lib),
+            Ok(lib) => self.plugin.set_plugin(&lib),
             Err(e) => {
                 println!("Unable to load dynamic lib, err {:?}", e);
-                return;
             }
         }
     }

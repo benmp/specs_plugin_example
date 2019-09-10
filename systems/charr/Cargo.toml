@@ -10,5 +10,5 @@ edition = "2018"
 specs = "*"
 dynamic_reload = "*"
 components = { path = "../../components" }
-plugins = { path = "../../plugins" }
+plugin = { path = "../../plugin" }
 

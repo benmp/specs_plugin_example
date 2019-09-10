@@ -1,11 +1,7 @@
 // use crossterm::{input, AlternateScreen, ClearType, Crossterm, InputEvent, KeyEvent, RawScreen};
-use dynamic_reload::{DynamicReload, Search};
 
 use specs::prelude::*;
-extern crate charr;
-extern crate plugins;
 
-use std::thread;
 use std::time::Duration;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -45,7 +41,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     dispatcher.setup(&mut world);
 
-    dispatcher.dispatch(&mut world);
+    dispatcher.dispatch(&world);
 
     println!("Press 'ESC' to quit.");
 
@@ -64,7 +60,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     //let mut start_current_loop = std::time::Instant::now();
 
     'running: loop {
-        dispatcher.dispatch(&mut world);
+        dispatcher.dispatch(&world);
 
         std::thread::sleep(Duration::from_secs(5));
 
@@ -121,7 +117,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         //    framelimiter.wait();
     }
 
-    println!("Program closing ...");
+    // println!("Program closing ...");
 
-    Ok(())
+    // Ok(())
 }

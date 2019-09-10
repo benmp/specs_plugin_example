@@ -4,8 +4,12 @@ members = [
   "components",
   "framelimiter",
   "time",
-  "plugins",
+  "plugin",
   "systems/charr",
+  "scripts/charr_dylib"
+]
+
+default-members = [
   "scripts/charr_dylib"
 ]
 
