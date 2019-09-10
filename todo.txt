@@ -1,0 +1,10 @@
+add position component
+setup crossterm to print stuff
+add position component to renderchar
+
+add input checks to quit program
+
+add input checks to move symbol
+
+add window bound check for symbol movement
+
