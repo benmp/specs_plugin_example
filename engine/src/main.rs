@@ -1,23 +1,9 @@
-// use crossterm::{input, AlternateScreen, ClearType, Crossterm, InputEvent, KeyEvent, RawScreen};
-
 use specs::prelude::*;
 
 use std::time::Duration;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Press 'ESC' to quit.");
-
-    //RENDERING
-    // AlternateScreen::to_alternate(false)?;
-
-    // let crossterm = Crossterm::new();
-    // let terminal = crossterm.terminal();
-    // let cursor = crossterm.cursor();
-
-    // terminal.clear(ClearType::All).unwrap();
-
-    // cursor.goto(0, 0).unwrap();
-    // cursor.hide().unwrap();
 
     // RawScreen::into_raw_mode()?;
     // let input = input();
@@ -29,19 +15,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     //SPECS WORLD
     let mut world = World::new();
 
+    //ENTITIES
     world.register::<components::Character>();
+    world.register::<components::Position>();
     world
         .create_entity()
-        .with(components::Character('s'))
+        .with(components::Character::default())
+        .with(components::Position::default())
         .build();
 
+    //SYSTEMS
     let mut dispatcher = DispatcherBuilder::new()
-        .with(charr::RenderChar::new(), "charr", &[])
+        .with_thread_local(charr::RenderChar::new())
         .build();
 
     dispatcher.setup(&mut world);
-
-    dispatcher.dispatch(&world);
 
     println!("Press 'ESC' to quit.");
 
@@ -62,7 +50,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     'running: loop {
         dispatcher.dispatch(&world);
 
-        std::thread::sleep(Duration::from_secs(5));
+        std::thread::sleep(Duration::from_secs(1));
 
         //    //INPUT
         //    // collect input on previous loop timer so that when we tick it includes all events
