@@ -42,6 +42,11 @@ dependencies = [
 [[package]]
 name = "charr_dylib"
 version = "0.1.0"
+dependencies = [
+ "charr 0.1.0",
+ "components 0.1.0",
+ "crossterm 0.10.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "components"

@@ -1,10 +1,7 @@
-use crossterm::{
-    input, AlternateScreen, ClearType, Crossterm, InputEvent, KeyEvent, RawScreen, Terminal,
-    TerminalCursor,
-};
+use crossterm::{AlternateScreen, ClearType, Crossterm, Terminal, TerminalCursor};
 use dynamic_reload::{DynamicReload, PlatformName, Search, Symbol};
 use specs::prelude::*;
-use std::io::{self, stdout, Write};
+use std::io::{stdout, Write};
 
 pub struct RenderChar {
     pub reload_handler: DynamicReload,
@@ -20,7 +17,7 @@ impl RenderChar {
         let cursor = crossterm.cursor();
 
         terminal.clear(ClearType::All).unwrap();
-        AlternateScreen::to_alternate(true);
+        AlternateScreen::to_alternate(true).unwrap();
 
         RenderChar {
             reload_handler: DynamicReload::new(
@@ -55,26 +52,25 @@ impl<'a> System<'a> for RenderChar {
             .update(plugin::Plugin::reload_callback, &mut self.plugin);
 
         //TODO figure out how to cache this symbol?
-        // let fun: Symbol<fn() -> i32> = unsafe {
-        //     self.plugin
-        //         .plugin
-        //         .as_ref()
-        //         .unwrap()
-        //         .lib
-        //         .get(b"it_works")
-        //         .unwrap()
-        // };
+        let fun: Symbol<
+            fn(&mut TerminalCursor, &components::Character, &mut components::Position),
+        > = unsafe {
+            self.plugin
+                .plugin
+                .as_ref()
+                .unwrap()
+                .lib
+                .get(b"it_works")
+                .unwrap()
+        };
 
         self.terminal.clear(ClearType::All).unwrap();
 
         for (character, position) in (&character, &mut position).join() {
-            self.cursor.goto(position.x, position.y);
-            print!("{}", character.0);
-            stdout().flush().unwrap();
-
-            position.x = position.x + 1;
-            position.y = position.y + 1;
+            fun(&mut self.cursor, character, position);
         }
+
+        stdout().flush().unwrap();
     }
 
     fn setup(&mut self, res: &mut specs::prelude::World) {
@@ -82,7 +78,7 @@ impl<'a> System<'a> for RenderChar {
 
         match self
             .reload_handler
-            .add_library("libcharr_dylib.so", PlatformName::No)
+            .add_library("libcharr_dylib.dylib", PlatformName::No)
         {
             Ok(lib) => self.plugin.set_plugin(&lib),
             Err(e) => {
