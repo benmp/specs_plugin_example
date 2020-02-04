@@ -51,7 +51,6 @@ impl<'a> System<'a> for RenderChar {
         self.reload_handler
             .update(plugin::Plugin::reload_callback, &mut self.plugin);
 
-        //TODO figure out how to cache this symbol?
         let fun: Symbol<
             fn(&mut TerminalCursor, &components::Character, &mut components::Position),
         > = unsafe {
@@ -78,7 +77,7 @@ impl<'a> System<'a> for RenderChar {
 
         match self
             .reload_handler
-            .add_library("libcharr_dylib.dylib", PlatformName::No)
+            .add_library("libcharr_dylib.so", PlatformName::No)
         {
             Ok(lib) => self.plugin.set_plugin(&lib),
             Err(e) => {

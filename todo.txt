@@ -1,4 +1,8 @@
-make logic in renderchar use dylib again
+make components dumb structs to reduce libs used by dylib
+move specs component impl into separate lib
+
+move systems dumb structs to reduce libs used by dylib
+move specs system impl into separate lib
 
 add input checks to quit program
 
@@ -7,3 +11,5 @@ add input checks to move symbol
 add window bound check for symbol movement
 
 figure out how to cache dylib symbols?
+
+figure out how not to have to type dylib function signature in 3 places?
