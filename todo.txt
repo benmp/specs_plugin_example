@@ -1,6 +1,3 @@
-make components dumb structs to reduce libs used by dylib
-move specs component impl into separate lib
-
 move systems dumb structs to reduce libs used by dylib
 move specs system impl into separate lib
 

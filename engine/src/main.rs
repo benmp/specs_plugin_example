@@ -16,12 +16,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut world = World::new();
 
     //ENTITIES
-    world.register::<components::Character>();
-    world.register::<components::Position>();
+    world.register::<ecs_impl::WCharacter>();
+    world.register::<ecs_impl::WPosition>();
     world
         .create_entity()
-        .with(components::Character::default())
-        .with(components::Position::default())
+        .with(ecs_impl::WCharacter::default())
+        .with(ecs_impl::WPosition::default())
         .build();
 
     //SYSTEMS

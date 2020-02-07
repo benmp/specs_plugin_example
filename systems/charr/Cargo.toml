@@ -11,6 +11,7 @@ specs = "*"
 dynamic_reload = "*"
 crossterm = "*"
 components = { path = "../../components" }
+ecs_impl = { path = "../../ecs_impl" }
 plugin = { path = "../../plugin" }
 
 

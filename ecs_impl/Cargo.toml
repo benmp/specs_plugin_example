@@ -1,12 +1,9 @@
 [package]
-name = "engine"
+name = "ecs_impl"
 version = "0.1.0"
 authors = ["runbmp"]
 edition = "2018"
 
 [dependencies]
 specs = "*"
-ecs_impl = { path = "../ecs_impl" }
-charr = { path = "../systems/charr" }
-
-
+components = { path = "../components" }

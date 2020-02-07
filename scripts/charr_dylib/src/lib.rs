@@ -7,6 +7,6 @@ pub fn it_works(
     crossterm.cursor().goto(position.x, position.y);
     crossterm.terminal().write(&character.0);
 
-    position.x = position.x + 1;
-    position.y = position.y + 1;
+    position.x += 1;
+    position.y -= 1;
 }

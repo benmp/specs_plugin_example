@@ -35,6 +35,7 @@ dependencies = [
  "components 0.1.0",
  "crossterm 0.10.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "dynamic_reload 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "ecs_impl 0.1.0",
  "plugin 0.1.0",
  "specs 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -43,7 +44,6 @@ dependencies = [
 name = "charr_dylib"
 version = "0.1.0"
 dependencies = [
- "charr 0.1.0",
  "components 0.1.0",
  "crossterm 0.10.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -51,9 +51,6 @@ dependencies = [
 [[package]]
 name = "components"
 version = "0.1.0"
-dependencies = [
- "specs 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
-]
 
 [[package]]
 name = "crossbeam-deque"
@@ -200,6 +197,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "ecs_impl"
+version = "0.1.0"
+dependencies = [
+ "components 0.1.0",
+ "specs 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "either"
 version = "1.5.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -209,7 +214,7 @@ name = "engine"
 version = "0.1.0"
 dependencies = [
  "charr 0.1.0",
- "components 0.1.0",
+ "ecs_impl 0.1.0",
  "specs 0.15.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

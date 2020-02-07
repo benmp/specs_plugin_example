@@ -43,8 +43,8 @@ impl<'a> System<'a> for RenderChar {
     // You can also define a struct and `#[derive(SystemData)]`,
     // see the `full` example.
     type SystemData = (
-        ReadStorage<'a, components::Character>,
-        WriteStorage<'a, components::Position>,
+        ReadStorage<'a, ecs_impl::WCharacter>,
+        WriteStorage<'a, ecs_impl::WPosition>,
     );
 
     fn run(&mut self, (character, mut position): Self::SystemData) {
@@ -66,7 +66,7 @@ impl<'a> System<'a> for RenderChar {
         self.terminal.clear(ClearType::All).unwrap();
 
         for (character, position) in (&character, &mut position).join() {
-            fun(&mut self.cursor, character, position);
+            fun(&mut self.cursor, &character.0, &mut position.0);
         }
 
         stdout().flush().unwrap();

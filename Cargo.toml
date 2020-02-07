@@ -1,5 +1,6 @@
 [workspace]
 members = [
+  "ecs_impl",
   "engine",
   "components",
   "framelimiter",

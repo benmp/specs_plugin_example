@@ -235,7 +235,7 @@ impl Default for Stopwatch {
 impl Stopwatch {
     /// Creates a new stopwatch.
     pub fn new() -> Stopwatch {
-        Default::default()
+        Stopwatch::default()
     }
 
     /// Retrieves the elapsed time.
